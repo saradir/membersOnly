@@ -1,5 +1,7 @@
 import { validationResult, matchedData } from "express-validator";
 import * as userQueries from '../db/userQueries.js';
+import bcrypt from 'bcryptjs';
+
 
 export function showSignupForm(req, res){
     res.render('signupForm', {
@@ -8,7 +10,7 @@ export function showSignupForm(req, res){
 }
 
 // TODO: 
-export async function processSignup(req, res){
+export async function processSignup(req, res, next){
     const errors = validationResult(req);
     if(!errors.isEmpty()){
         return res.status(400).render("signupForm", {
@@ -20,11 +22,13 @@ export async function processSignup(req, res){
     const data = matchedData(req);
 
     try{
+
+        const hashedPassword = await bcrypt.hash(data.password, 10);
         await userQueries.createUser(
             data.first_name,
             data.last_name,
             data.email,
-            data.password
+            hashedPassword
         );
 
         res.redirect('/users/signin');
@@ -36,6 +40,7 @@ export async function processSignup(req, res){
         });
         }
     }
+    next(err);
 }
 
 // TODO:
