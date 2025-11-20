@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include ('./partials/header') %>
+<body>
+    <%- include('./partials/errors') %>
+    <form action="/users/signup" method="post">
+
+        <label for="first_name">First Name:</label>
+        <input type="text" id="first_name" name="first_name" value="<%= locals.oldInput? oldInput.first_name : '' %>" required>
+
+        <label for="last_name">Last Name:</label>
+        <input type="text" id="last_name" name="last_name" value="<%= locals.oldInput?.last_name || '' %>" required>
+
+        <label for="email">Email (this will serve as your username):</label>
+        <input type="email"   autocomplete="username" id="email" name="email" value="<%= locals.oldInput?.email || '' %>" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" autocomplete="new-password"  required>
+
+        <label for="password">Confirm Password:</label>
+        <input type="password" id="password2" name="password2" autocomplete="new-password" required>
+
+        <button type="submit">Register</button>
+
+    </form>
+</body>
+</html>

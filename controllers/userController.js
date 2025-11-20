@@ -1,0 +1,53 @@
+import { validationResult, matchedData } from "express-validator";
+import * as userQueries from '../db/userQueries.js';
+
+export function showSignupForm(req, res){
+    res.render('signupForm', {
+        title: "New User"
+    });
+}
+
+// TODO: 
+export async function processSignup(req, res){
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).render("signupForm", {
+        errors: errors.array(),
+        oldInput: req.body // use req.body for refill
+    });
+    }
+
+    const data = matchedData(req);
+
+    try{
+        await userQueries.createUser(
+            data.first_name,
+            data.last_name,
+            data.email,
+            data.password
+        );
+
+        res.redirect('/users/signin');
+    } catch (err) {
+        if (err.message === "EMAIL_TAKEN") {
+            return res.status(400).render("signupForm", {
+            errors: [{msg: "Email is already registered."}],
+            oldInput: req.body
+        });
+        }
+    }
+}
+
+// TODO:
+export function showSigninForm(req,res){
+        res.render('signinForm', {
+        title: "Sign in"
+    });
+}
+
+
+// TODO:
+export function processSignin(req, res){
+    return;
+}
+

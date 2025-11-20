@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-require("dotenv").config();
-const { Client } = require("pg");
+import 'dotenv/config';
+import { Client } from "pg";
 
 const SQL = `
