@@ -9,7 +9,6 @@ export function showSignupForm(req, res){
     });
 }
 
-// TODO: 
 export async function processSignup(req, res, next){
     const errors = validationResult(req);
     if(!errors.isEmpty()){
@@ -43,16 +42,19 @@ export async function processSignup(req, res, next){
     next(err);
 }
 
-// TODO:
 export function showSigninForm(req,res){
         res.render('signinForm', {
-        title: "Sign in"
+        title: "Sign in",
+        messages: req.session.messages || []
+
     });
+
+    req.session.messages = []; // clear after use
 }
 
 
 // TODO:
-export function processSignin(req, res){
+export function processSignin(req, res, next){
     return;
 }
 

@@ -4,10 +4,7 @@ const alphaErr = "must only contain letters.";
 const lengthErr = "must be between 1 and 20 characters.";
 
 export const signUpValidator = [
-(req, res, next) => {
-    console.log('start validating');
-    next();
-  },
+
   body('first_name')
     .trim()
     .isAlpha().withMessage(`First name ${alphaErr}`)
@@ -20,7 +17,7 @@ export const signUpValidator = [
 
   body('email').isEmail().withMessage('Must be a valid email address'),
 
-  body('password').isLength({ min: 8 }),
+  body('password').isLength({ min: 8 }).withMessage('Password must have at least 8 characters'),
 
   body('password2').custom((value, { req }) => {
     if (value !== req.body.password) {
@@ -29,3 +26,11 @@ export const signUpValidator = [
     return true;
   }),
 ];
+
+export const signInValidator = [
+    body('email')
+    .trim()
+    .isEmail(),
+
+    body('password').notEmpty()
+]

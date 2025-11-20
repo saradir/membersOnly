@@ -2,6 +2,22 @@
 <html lang="en">
 
 <body>
-    
+    <% if (locals.messages) { %>
+        <% locals.messages.forEach(msg => { %>
+        <p><%= msg %></p>
+        <% }) %>
+    <% } %>
+
+    <form action="/users/signin" method="post">
+
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required>
+
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required>
+
+        <button type="submit">Sign in</button>
+        
+    </form>
 </body>
 </html>
