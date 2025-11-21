@@ -1,5 +1,5 @@
+import { ExpressValidator } from 'express-validator';
 import { pool } from './pool.js';
-import bcrypt from "bcrypt";
 
 export async function createUser(firstName, lastName, email, pass){
     try{
@@ -18,6 +18,21 @@ export async function createUser(firstName, lastName, email, pass){
         throw new Error("EMAIL_TAKEN");
     }
         console.error("Error creating user:", err);
+        throw err;
+    }
+}
+
+export async function getUserById(id){
+    try{
+        const { rows } = await pool.query(
+            `SELECT * FROM users
+             WHERE id = $1;`,
+             [id]
+        );
+
+        return rows[0];        
+    } catch (err){
+        console.error("Error fetching user:", err);
         throw err;
     }
 }

@@ -63,3 +63,35 @@ export function signOut(req, res, next){
   });
 }
 
+export async function showUserPage(req, res, next){
+
+    const profileId = Number(req.params.id);
+    console.log(profileId);
+
+    if(req.user && req.user.id === profileId){
+        res.render('userPage', {
+            title: `${req.user.first_name} ${req.user.last_name}'s profile`,
+            isOwner: true,
+            user: req.user
+    });
+    } else{
+        try{
+            const user =  await userQueries.getUserById(profileId);
+            
+            if (!user) {
+                return res.status(404).send("User not found");
+            }
+
+            res.render('userPage', {
+                title: `${user.first_name} ${user.last_name}'s profile`,
+                isOwner: false
+            });
+        } catch (err){
+            console.error("Error fetching user's page:", err);
+            next(err);
+        }
+    }
+  
+}
+
+

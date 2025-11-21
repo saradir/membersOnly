@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<%- include('./partials/header') %>
+<body>
+    <% include('./partials/nav') %>
+    <form action="/messages/new" method="post">
+
+        <label for="title">Title:</label>
+        <input type="text" name="title" id="title">
+
+        <label for="text">Text:</label>
+        <textarea id="text" name="text" rows="6" cols="40"></textarea>
+
+        <button type="submit">Submit</button>
+    </form>
+
+</body>
+</html>

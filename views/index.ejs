@@ -14,5 +14,24 @@
         <a href="/users/signup/">here</a>
     </p>
     <% } %>
+
+    <div class="messages"></div>
+        <% if(messages && messages.length > 0){ %>
+            <% messages.forEach(message => { %>
+                <div class="message" id="<%= message.id %>">
+                    <div class="message_header">
+                        <span>Title: <%= message.title %></span>
+                        <span>Author: <%= '' %></span> // doesn't exist yet
+                    </div>
+
+                    <div class="message_body">
+                        <p><%= message.text %></p>
+                    </div>
+                </div>
+           <% }) %>     
+        <%} else { %>
+            <p>No messages to display</p>
+            <% } %>
+
 </body>
 </html>
