@@ -15,5 +15,6 @@ router.post('/signin', userValidator.signInValidator,  passport.authenticate("lo
     failureMessage: true,
     failureRedirect: "/users/signin"
   }));
+router.get('/signout', userController.signOut);
 
 export default router;

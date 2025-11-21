@@ -2,11 +2,17 @@
 <html lang="en">
 
 <body>
+    <%- include('./partials/nav') %> 
     <h1>Welcome!</h1>
+
+    <% if(locals.currentUser) { %>
+        Welcome <%=user.first_name %>
+        <% }else{ %> 
     <p>Already a member? Sign in 
         <a href="/users/signin/">here</a>
         First time visitor? Sign up 
         <a href="/users/signup/">here</a>
     </p>
+    <% } %>
 </body>
 </html>

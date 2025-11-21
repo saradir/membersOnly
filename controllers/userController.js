@@ -53,8 +53,13 @@ export function showSigninForm(req,res){
 }
 
 
-// TODO:
-export function processSignin(req, res, next){
-    return;
+
+export function signOut(req, res, next){
+    req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
 }
 
