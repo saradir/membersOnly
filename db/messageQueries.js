@@ -30,3 +30,18 @@ export async function getAllMessages(){
         throw err;
     }
 }
+
+export async function deleteMessage(id){
+    try{
+        const {rows} = await pool.query(
+            `DELETE from messages
+             WHERE id = $1
+             RETURNING*;`,
+             [id]
+        );
+        return rows[0];
+    } catch (err){
+        console.error('Error deleting message:', err);
+        throw err;
+    }
+}

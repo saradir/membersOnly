@@ -22,7 +22,7 @@
                 <div class="message" id="<%= message.id %>">
                     <div class="message_header">
                         <span>Title: <%= message.title %></span>
-                        <% if(locals.currentUser){ %>
+                        <% if(currentUser && currentUser.is_member){ %>
                             <span>Author:
                                 <a href="<%= `/users/${message.user_id}` %>">
                                      <%= `${message.first_name} ${message.last_name}` %>
@@ -32,6 +32,12 @@
                                 Date: <%= date.shortDate(message.created_at) %>
                             </span> 
                             <% } %>
+                            
+                        <% if (locals.currentUser?.is_admin){ %>
+                            <form action="/messages/<%= message.id %>/delete" method="POST" style="display:inline;">
+                            <button type="submit">Delete</button>
+                            </form>
+                        <% } %>
                     </div>
 
                     <div class="message_body">
