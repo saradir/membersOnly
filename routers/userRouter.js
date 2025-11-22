@@ -31,6 +31,9 @@ router.post(
   }
 );
 router.get('/signout', userController.signOut);
+router.get('/join-club', userController.showJoinClubForm);
+router.post('/join-club', userController.processJoinClubForm);
 router.get('/:id', userController.showUserPage);
+
 
 export default router;

@@ -4,7 +4,25 @@
 <body>
     <%- include('./partials/nav') %>
     
-    <h1>Hello <%= currentUser.first_name %></h1>
-    <a href='/messages/new'>New Message</a>
+    <% if(isOwner) { %>
+            <h1>Hello <%= currentUser.first_name %></h1>
+            <a href='/messages/new'>New Message</a>
+    <% } %>
+    <% if(!isOwner){ %>
+        <h1>Welcome to <%= user.first_name %>'s Profile' </h1>
+    <% } %>
+
+    <div>
+        <p>Status:
+            <% if(!currentUser.is_member){ %>
+                <a href="<%= `/users/join-club` %>">Not a member yet. Join Our Club!</a>
+            <% }else if(currentUser.is_admin) { %>
+                Admin
+            <% } else if (currentUser.is_member) { %>
+                Club Member    
+            <% } %>
+        </p>
+    </div>
+
 </body>
 </html>

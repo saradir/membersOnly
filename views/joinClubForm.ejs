@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<%- include('./partials/header') %>
+<body>
+    <%- include('./partials/nav') %>
+    <%- include('./partials/errors') %>
+    <p>Please fill in the password to join our club!</p>
+    <form action="/users/join-club" method="post">
+
+        <label for="password">Password: </label>
+        <input type="password" id="password" name="password" required autocomplete="off">
+
+        <button type="submit">Submit</button>
+
+        
+    </form>
+</body>

@@ -1,6 +1,6 @@
 <nav>
     <% if (currentUser) { %>
-    <a href=<% `/users/${currentUser.id}` %>>Profile (<%=currentUser.first_name %>)</a>
+    <a href=<%= `/users/${currentUser.id}` %>>Profile (<%=currentUser.first_name %>)</a>
     <a href="/users/signout">Sign out</a>
    <% } else { %>
     <a href="/users/signin">Sign In</a>

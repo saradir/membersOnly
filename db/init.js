@@ -11,6 +11,7 @@ last_name TEXT NOT NULL,
 first_name TEXT NOT NULL,
 email TEXT UNIQUE NOT NULL,
 is_member BOOLEAN DEFAULT false,
+is_admin BOOLEAN DEFAULT false,
 hashed_password TEXT NOT NULL
 );
 

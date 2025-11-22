@@ -66,8 +66,6 @@ export function signOut(req, res, next){
 export async function showUserPage(req, res, next){
 
     const profileId = Number(req.params.id);
-    console.log(profileId);
-
     if(req.user && req.user.id === profileId){
         res.render('userPage', {
             title: `${req.user.first_name} ${req.user.last_name}'s profile`,
@@ -95,3 +93,46 @@ export async function showUserPage(req, res, next){
 }
 
 
+export function showJoinClubForm(req, res, next){
+
+    if(!req.user){
+        res.status(403).send("You must sign in first.");
+    }
+
+    if(req.user.is_member){
+      return res.render('error', {
+      title: 'Already a member',
+      message: 'You are already a club member.'
+    });
+    }
+    res.render('joinClubForm', {
+        title: 'Join Our Club'
+    });
+}
+
+export async function processJoinClubForm(req, res, next){
+    try {
+        if (!req.user) return res.redirect("/sign-in");
+
+        const { password } = req.body;
+
+    
+        if (password === process.env.MEMBER_SECRET) {
+            await userQueries.updateUser(req.user.id, { is_member: true });
+        }
+        else if (password === process.env.ADMIN_SECRET){
+            await userQueries.updateUser(req.user.id, { is_member: true, is_admin: true });
+        }else{
+
+            return res.render("joinClubForm", {
+            title: "Join Our Club",
+            errors: [{msg: "Invalid membership code"}]
+        });
+            
+        }
+
+        res.redirect(`/users/${req.user.id}`);
+  } catch (err) {
+    next(err);
+  }
+}
