@@ -16,12 +16,22 @@
     <% } %>
 
     <div class="messages"></div>
+    <h2>Messages:</h2>
         <% if(messages && messages.length > 0){ %>
             <% messages.forEach(message => { %>
                 <div class="message" id="<%= message.id %>">
                     <div class="message_header">
                         <span>Title: <%= message.title %></span>
-                        <span>Author: <%= '' %></span> // doesn't exist yet
+                        <% if(locals.currentUser){ %>
+                            <span>Author:
+                                <a href="<%= `/users/${message.user_id}` %>">
+                                     <%= `${message.first_name} ${message.last_name}` %>
+                                </a>
+                            </span> 
+                            <span title="<%= date.longDate(message.created_at) %>">
+                                Date: <%= date.shortDate(message.created_at) %>
+                            </span> 
+                            <% } %>
                     </div>
 
                     <div class="message_body">

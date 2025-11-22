@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import session from "express-session";
 import passport from './config/passport.js';
+import  * as dateHelpers  from './utils/dateHelpers.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -28,10 +29,17 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
   next();
 });
+app.use((req, res, next) => {
+  res.locals.date = dateHelpers;
+  next();
+});
+
 app.use('/', indexRouter);
 app.use('/users', userRouter);
 app.use('/messages', messageRouter);
